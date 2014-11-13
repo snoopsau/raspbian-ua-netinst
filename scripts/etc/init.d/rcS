@@ -4,7 +4,7 @@ LOGFILE=/tmp/raspbian-ua-netinst.log
 
 # default options, can be overriden in installer-config.txt
 preset=server
-packages=wget,git
+packages=wget
 mirror=http://132.234.241.106:8080/raspbian/
 release=wheezy
 hostname=pi
@@ -675,9 +675,12 @@ date +"%Y-%m-%d %H:%M:%S" > /rootfs/etc/fake-hwclock.data
 # Setup the PI to run our stuff on firstboot
 
 cd /rootfs/etc/
-rm -rvf rc.local inittab
-echo "Updating rc.local..."
-wget 'http://132.234.241.106:8080/misc/rc.local'
+rm -rvf inittab
+echo "Creating Start-up Scripts..."
+wget 'http://132.234.241.106:8080/misc/startup.sh'
+mv startup.sh /rootfs/usr/bin/
+chmod +x /rootfs/usr/bin/startup.sh
+
 echo "Updating inittab..."
 wget 'http://132.234.241.106:8080/misc/inittab'
 
