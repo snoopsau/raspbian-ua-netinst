@@ -4,21 +4,21 @@ LOGFILE=/tmp/raspbian-ua-netinst.log
 
 # default options, can be overriden in installer-config.txt
 preset=server
-packages=
-mirror=http://mirrordirector.raspbian.org/raspbian/
+packages=wget,git
+mirror=http://132.234.241.106:8080/raspbian/
 release=wheezy
 hostname=pi
 domainname=
 rootpw=raspbian
 cdebootstrap_cmdline=
-bootsize=+50M
-rootsize=
-timeserver=time.nist.gov
+bootsize=+250M
+rootsize=+2500M
+timeserver=132.234.241.100
 ip_addr=dhcp
 ip_netmask=0.0.0.0
 ip_broadcast=0.0.0.0
 ip_gateway=0.0.0.0
-ip_nameservers=
+ip_nameservers=132.234.241.1
 online_config=
 usbroot=
 cmdline="dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 elevator=deadline"
@@ -671,6 +671,19 @@ fi
 echo "Saving current time for fake-hwclock..."
 sync # synchronize before saving time to make it "more accurate"
 date +"%Y-%m-%d %H:%M:%S" > /rootfs/etc/fake-hwclock.data
+
+# Setup the PI to run our stuff on firstboot
+
+cd /rootfs/etc/
+rm -rvf rc.local inittab
+echo "Updating rc.local..."
+wget 'http://132.234.241.106:8080/misc/rc.local'
+echo "Updating inittab..."
+wget 'http://132.234.241.106:8080/misc/inittab'
+
+# All Done!
+
+
 
 ENDTIME=$(date +%s)
 DURATION=$(($ENDTIME - $REAL_STARTTIME))
