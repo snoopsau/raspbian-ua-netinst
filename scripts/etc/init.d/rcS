@@ -42,6 +42,7 @@ fail()
         mount $bootpartition /boot
         fail_boot_mounted=true
     fi
+    rm -f /boot/*.log   # make sure we dont fill up the sdcard and clear out the last log file(s)...
     cp $LOGFILE /boot/raspbian-ua-netinst-`date +%Y%m%dT%H%M%S`.log
     sync
     
@@ -229,6 +230,7 @@ fi
 PRE_NETWORK_DURATION=$(date +%s)
 
 date_set=false
+sleep 3  # seems dhcp can take a while to get sorted - sleep here to be sure the network is up
 if [ "$date_set" = "false" ] ; then
     # time server addresses taken from http://tf.nist.gov/tf-cgi/servers.cgi
     timeservers=$timeserver
