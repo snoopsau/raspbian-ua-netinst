@@ -592,6 +592,11 @@ fi
 # We dont need sound...! 
 # echo "snd-bcm2835" >> /rootfs/etc/modules
 
+# instead we will include the rpi watchdog module to reboot the device in case of failures....
+# Setting up rPI hardware watch dog...
+echo "bcm2708_wdog" >> /rootfs/etc/modules
+
+
 echo "Configuring bootloader to start the installed system..."
 mv /rootfs/boot/config.txt /rootfs/boot/config-reinstall.txt
 
