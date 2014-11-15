@@ -1,6 +1,6 @@
 #!/bin/busybox sh
 
-LOGFILE=/tmp/raspbian-ua-netinst.log
+LOGFILE=/tmp/griff-netmon-install.log
 
 # default options, can be overriden in installer-config.txt
 preset=server
@@ -12,7 +12,7 @@ domainname=
 rootpw=raspbian
 cdebootstrap_cmdline=
 bootsize=+250M
-rootsize=+2500M
+rootsize=
 timeserver=132.234.241.100
 ip_addr=dhcp
 ip_netmask=0.0.0.0
@@ -102,12 +102,10 @@ rm ${LOGFILE}.pipe
 
 echo ""
 echo "================================================="
-echo "raspbian-ua-netinst"
+echo "Granzee rPI Network Monitor Net-Installation"
 echo "================================================="
-echo "Revision __VERSION__"
+echo "Revision Griffith University - November 15 2014"
 echo "Built on __DATE__"
-echo "================================================="
-echo "https://github.com/debian-pi/raspbian-ua-netinst/"
 echo "================================================="
 
 echo -n "Copying boot files... "
@@ -235,7 +233,7 @@ if [ "$date_set" = "false" ] ; then
     # time server addresses taken from http://tf.nist.gov/tf-cgi/servers.cgi
     timeservers=$timeserver
     timeservers="$timeservers time.nist.gov nist1.symmetricom.com"
-    timeservers="$timeservers nist-time-server.eoni.com utcnist.colorado.edu"
+    timeservers="$timeservers 132.234.241.106" # fall back to our own server
     timeservers="$timeservers nist1-pa.ustiming.org nist.expertsmi.com"
     timeservers="$timeservers nist1-macon.macon.ga.us wolfnisttime.com"
     timeservers="$timeservers nist.time.nosc.us nist.netservicesgroup.com"
@@ -341,28 +339,28 @@ if [ "$rootpartition" = "" ]; then
     fi
 fi
 
-echo
-echo "Installer configuration:"
-echo "  preset = $preset"
-echo "  packages = $packages"
-echo "  mirror = $mirror"
-echo "  release = $release"
-echo "  hostname = $hostname"
-echo "  domainname = $domainname"
-echo "  rootpw = $rootpw"
-echo "  cdebootstrap_cmdline = $cdebootstrap_cmdline"
-echo "  bootsize = $bootsize"
-echo "  rootsize = $rootsize"
-echo "  timeserver = $timeserver"
-echo "  cmdline = $cmdline"
-echo "  usbroot = $usbroot"
-echo "  rootdev = $rootdev"
-echo "  rootpartition = $rootpartition"
-echo "  rootfstype = $rootfstype"
-echo "  rootfs_mkfs_options = $rootfs_mkfs_options"
-echo "  rootfs_install_mount_options = $rootfs_install_mount_options"
-echo "  rootfs_mount_options = $rootfs_mount_options"
-echo
+#echo
+#echo "Installer configuration:"
+#echo "  preset = $preset"
+#echo "  packages = $packages"
+#echo "  mirror = $mirror"
+##echo "  release = $release"
+#echo "  hostname = $hostname"
+#echo "  domainname = $domainname"
+#echo "  rootpw = $rootpw"
+#echo "  cdebootstrap_cmdline = $cdebootstrap_cmdline"
+#echo "  bootsize = $bootsize"
+#echo "  rootsize = $rootsize"
+#echo "  timeserver = $timeserver"
+#echo "  cmdline = $cmdline"
+##echo "  usbroot = $usbroot"
+#echo "  rootdev = $rootdev"
+#echo "  rootpartition = $rootpartition"
+#echo "  rootfstype = $rootfstype"
+#echo "  rootfs_mkfs_options = $rootfs_mkfs_options"
+#echo "  rootfs_install_mount_options = $rootfs_install_mount_options"
+#echo "  rootfs_mount_options = $rootfs_mount_options"
+#echo
 
 echo -n "Waiting for $rootdev... "
 for i in `seq 1 10`; do
